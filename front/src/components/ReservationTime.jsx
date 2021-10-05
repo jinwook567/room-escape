@@ -11,11 +11,14 @@ function ReservationTime({ selectedTheme, timeTableData, handleTime, selectedTim
           .find((data) => data.name === selectedTheme)
           .time.map((data) => {
             return (
-              <Item>
+              <Item key={data.time}>
                 <MyButton
                   selected={data.time === selectedTime}
                   disabled={data.booked}
-                  onClick={() => handleTime(data.time)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleTime(data.time);
+                  }}
                 >
                   {data.time}
                 </MyButton>

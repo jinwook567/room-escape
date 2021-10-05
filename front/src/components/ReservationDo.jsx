@@ -31,7 +31,6 @@ function ReservationDo() {
   const { data: timeTableData, status: timeTableStatus } = useQuery(["timeTable", startDate], () =>
     getThemeTimeTable({ date: startDate })
   );
-  console.log(timeTableData);
 
   const listRef = useRef();
 
@@ -69,11 +68,19 @@ function ReservationDo() {
     borderColor: "black",
   });
 
+  const StyledTimeGrid = styled(Grid)({
+    border: "1px solid",
+    borderColor: "black",
+    // overflow: "scroll",
+    // minHeight: "400px",
+    // maxHeight: "500px",
+  });
+
   if (timeTableStatus === "loading") return <Loading />;
 
   return (
     <div>
-      <Grid container justifyContent={"center"}>
+      <Grid container justifyContent={"center"} enableResetScrollToCoords={false}>
         <Grid item xs={12} md={9}>
           <Box mb={6}>
             <Stepper alternativeLabel activeStep={activeStep}>
@@ -109,7 +116,7 @@ function ReservationDo() {
                 <Stack spacing={2}>
                   {timeTableData.map((data) => {
                     return (
-                      <Item>
+                      <Item key={data.name}>
                         <MyButton
                           selected={selectedTheme === data.name}
                           onClick={() => handleTheme(data.name)}
@@ -123,13 +130,7 @@ function ReservationDo() {
               </Item>
             </StyledGrid>
 
-            <StyledGrid
-              item
-              xs={12}
-              md={4}
-              style={{ maxHeight: "500px", overflow: "scroll" }}
-              ref={listRef}
-            >
+            <StyledTimeGrid item xs={12} md={4} ref={listRef}>
               <Item>
                 <Box mb={2}>
                   <Typography variant={"h6"}>시간</Typography>
@@ -160,7 +161,7 @@ function ReservationDo() {
                       })} */}
                 </Stack>
               </Item>
-            </StyledGrid>
+            </StyledTimeGrid>
           </StyledGrid>
         )}
 
