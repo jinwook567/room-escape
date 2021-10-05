@@ -168,9 +168,7 @@ function ReservationInput({
 
             <Divider />
             <Typography variant={"h5"}>{`가격:${
-              data.count
-                ? Number(price[data.count - minCount]) * data.count
-                : (0).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+              data.count ? Number(price[data.count - minCount]) * data.count : 0
             }원`}</Typography>
           </Stack>
           <Box border={1} padding={2} mb={10} mt={3}>
