@@ -41,7 +41,6 @@ function ReservationInput({
   };
 
   const mutation = useMutation((postData) => {
-    console.log("postData", postData);
     return postReservation(postData);
   });
 

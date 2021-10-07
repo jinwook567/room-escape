@@ -1,12 +1,14 @@
 import { Grid } from "@material-ui/core";
 import { styled } from "@mui/system";
 import React from "react";
+import { use100vh } from "react-div-100vh";
 import { StyledContent } from "../App";
 import { DesktopGrid, MobileGrid } from "./common/Grid";
 
 function Main() {
+  const height = use100vh();
   return (
-    <StyledContent container>
+    <StyledContent container height={height}>
       <StyledBackGround container>
         <StyledDesktop container>
           <img src={"/main_pc.png"} alt={"mainImg"} />

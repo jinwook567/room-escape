@@ -6,13 +6,15 @@ import { useQuery } from "react-query";
 import { getTheme } from "./api";
 import Loading from "./common/Loading";
 import { StyledContent } from "../App";
+import { use100vh } from "react-div-100vh";
 
 function Theme() {
   const { data: themeData, status } = useQuery("theme", getTheme);
+  const height = use100vh();
   if (status === "loading") return <Loading />;
   if (status === "error") return <div>error..</div>;
   return (
-    <StyledContent>
+    <StyledContent height={height}>
       <div>
         <Box sx={{ m: 2 }}>
           <Typography variant="h4" component={"h1"} sx={{ m: 2 }}>

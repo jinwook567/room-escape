@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import Container from "@material-ui/core/Container";
@@ -9,20 +8,19 @@ import Theme from "./components/Theme";
 import Reservation from "./components/Reservation";
 import Main from "./components/Main";
 import { Grid } from "@material-ui/core";
+import Div100vh from "react-div-100vh";
 
 // const StyledContainer2 = styled(Container)({
 //   minHeight: "90vh",
 // });
 
 const StyledContainer = styled(Container)({
-  // minHeight: "100vh",
-  // justifyContent: "space-between",
   display: "flex",
   flexDirection: "column",
 });
 
-export const StyledContent = styled(Grid)(({ theme, center }) => ({
-  minHeight: "75vh",
+export const StyledContent = styled(Grid)(({ theme, center, height }) => ({
+  minHeight: (height / 4) * 3,
   alignItems: "center",
   marginTop: 50,
   [theme.breakpoints.down("lg")]: {
@@ -33,16 +31,18 @@ export const StyledContent = styled(Grid)(({ theme, center }) => ({
 function App() {
   return (
     <>
-      <StyledContainer>
-        <Header />
+      <Div100vh>
+        <StyledContainer>
+          <Header />
 
-        <Switch>
-          <Route path="/theme" component={Theme} />
-          <Route path="/reservation" component={Reservation} />
-          <Route path="/" component={Main} />
-        </Switch>
-      </StyledContainer>
-      <Footer />
+          <Switch>
+            <Route path="/theme" component={Theme} />
+            <Route path="/reservation" component={Reservation} />
+            <Route path="/" component={Main} />
+          </Switch>
+        </StyledContainer>
+        <Footer />
+      </Div100vh>
     </>
   );
 }

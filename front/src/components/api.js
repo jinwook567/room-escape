@@ -22,3 +22,7 @@ export async function getHolidays() {
   const response = await axios.get(`${url}/holiday`);
   return response.data;
 }
+
+export function deleteReservation(deleteData) {
+  return axios.post(`${url}/reservation/delete`, deleteData);
+}

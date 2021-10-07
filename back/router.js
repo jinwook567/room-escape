@@ -356,4 +356,99 @@ router.get("/holiday", async (req, res, next) => {
   }
 });
 
+router.post("/reservation/delete", async (req, res, next) => {
+  try {
+    const { date, phone, name, theme, time } = req.body;
+    console.log("body", req.body);
+
+    //엑셀 찾고
+    const parentFolderId = "1V7huybLsVHnQAErEZbGfMXL1aCQnY41R";
+    const getResponse = await driveService.files.list({
+      q: `'${parentFolderId}' in parents and trashed=false`,
+    });
+
+    const isExistFile = getResponse.data.files.find(
+      (file) =>
+        file.name === `${date}` && file.mimeType === "application/vnd.google-apps.spreadsheet"
+    );
+
+    if (!isExistFile) {
+      res.status(400).send("해당 일에는 예약이 없습니다.");
+      return;
+    }
+
+    const rowsData = await sheetService.spreadsheets.values.get({
+      spreadsheetId: isExistFile.id,
+      range: "Sheet1",
+    });
+    const rows = rowsData.data.values;
+    const tableHead = rows[0];
+    let reservationData = rows.map((data) => {
+      return tableHead.reduce((acc, cur, i) => {
+        acc[cur] = data[i];
+        return acc;
+      }, {});
+    });
+
+    reservationData.shift();
+    console.log("reservation", reservationData);
+
+    //엑셀에서 해당되는 셀 찾고
+    const index = reservationData.findIndex(
+      (reservation) =>
+        reservation.예약일 === date &&
+        reservation.이름 === name &&
+        reservation.연락처 === phone &&
+        reservation.테마 === theme &&
+        reservation.시간 === time
+    );
+
+    console.log("index", index);
+
+    if (index === -1) {
+      res.status(400).send("예약 정보가 없습니다.");
+      return;
+    }
+
+    await sheetService.spreadsheets.batchUpdate({
+      spreadsheetId: isExistFile.id,
+      resource: {
+        requests: [
+          {
+            deleteDimension: {
+              range: {
+                dimension: "ROWS",
+                startIndex: index + 1,
+                endIndex: index + 2,
+              },
+            },
+          },
+          {
+            sortRange: {
+              range: {
+                startRowIndex: 1,
+                endRowIndex: 30,
+                startColumnIndex: 0,
+                endColumnIndex: 10,
+              },
+              sortSpecs: [
+                {
+                  dimensionIndex: 2,
+                  sortOrder: "ASCENDING",
+                },
+              ],
+            },
+          },
+        ],
+      },
+    });
+
+    res.send("success");
+    //
+  } catch (err) {
+    console.error(err);
+    res.status(400).send("error");
+  }
+});
+
 module.exports = router;

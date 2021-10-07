@@ -9,6 +9,7 @@ function Modal({ open, setOpen, children }) {
 
   const StyledModal = styled(MaterialModal)(({ theme }) => ({
     display: "flex",
+    flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
   }));

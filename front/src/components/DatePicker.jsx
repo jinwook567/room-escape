@@ -9,12 +9,14 @@ import { getHolidays } from "./api";
 const getDate = (date) => {
   const year = new Date(date).getFullYear();
   const month =
-    Number(date.getMonth() + 1) < 10 ? "0" + String(Number(date.getMonth() + 1)) : date.getMonth();
+    Number(date.getMonth() + 1) < 10
+      ? "0" + String(Number(date.getMonth() + 1))
+      : date.getMonth() + 1;
   const day = Number(date.getDate()) < 10 ? "0" + String(Number(date.getDate())) : date.getDate();
   return `${year}${month}${day}`;
 };
 
-function DatePicker2({ startDate, setStartDate }) {
+function DatePicker2({ startDate, setStartDate, notInline }) {
   const maxDate = new Date().setMonth(new Date().getMonth() + 1);
 
   const createDate = (date) => {
@@ -44,12 +46,14 @@ function DatePicker2({ startDate, setStartDate }) {
           selected={startDate}
           locale={ko}
           onChange={(date) => setStartDate(date)}
-          inline
+          inline={notInline ? false : true}
           minDate={new Date()}
           maxDate={maxDate}
           dateFormat="yyyy-MM-dd"
           dayClassName={(date) => {
-            return date < new Date()
+            return date < new Date() || date > maxDate
+              ? undefined
+              : getDate(startDate) === getDate(date)
               ? undefined
               : getDayName(createDate(date)) === "토"
               ? "saturday"
@@ -59,7 +63,6 @@ function DatePicker2({ startDate, setStartDate }) {
               ? "saturday"
               : undefined;
           }}
-          calendarStartDay={1}
         />
       </div>
     </>
