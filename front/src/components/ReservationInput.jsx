@@ -50,6 +50,10 @@ function ReservationInput({
     }
   }, [mutation.status, setActiveStep]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleComplete = () => {
     if (!data.name) {
       alert("이름을 입력해주세요.");
@@ -195,6 +199,17 @@ function ReservationInput({
               {
                 "시간 내 미입금 시 예약이 자동 취소될 수 있습니다. \n입금명과 예약자명이 다를 시 전화 부탁드립니다. \n(카드결제, 현금영수증을 원하시는 분은 방문 시에 말씀해주세요.)"
               }
+            </Typography>
+
+            <Typography
+              component={"pre"}
+              variant={"body2"}
+              fontWeight={"bold"}
+              color={"black"}
+              whiteSpace={"pre-wrap"}
+              sx={{ marginTop: 1 }}
+            >
+              {"입금 계좌: 기업은행/주재빈 123-170741-01-019"}
             </Typography>
 
             <Typography

@@ -286,15 +286,26 @@ router.post("/reservation", async (req, res, next) => {
 
     //send kakao message
     //주문자한테, 사장님한테
-    const message = `예약이 완료되었습니다.
-  
-  예약일:${req.body.date}
-  테마:${req.body.theme}
-  시간:${req.body.time}
-  예약자:${req.body.name}
-  연락처:${req.body.phone}
-  인원:${req.body.count}명
-  금액:${req.body.price}원`;
+    const message = `${req.body.name}님, 예약이 완료되었습니다
+-${req.body.date} ${req.body.time}
+-테마:${req.body.theme}
+게임 시작 10분 전 도착해주세요
+
+예약금:${req.body.price}
+기업은행 / 주재빈
+123-170741-01-019
+입금 부탁드립니다. 시간 내 미입금 시 자동으로 취소될 수 있습니다.
+`;
+
+    //   const message = `예약이 완료되었습니다.
+
+    // 예약일:${req.body.date}
+    // 테마:${req.body.theme}
+    // 시간:${req.body.time}
+    // 예약자:${req.body.name}
+    // 연락처:${req.body.phone}
+    // 인원:${req.body.count}명
+    // 금액:${req.body.price}원`;
 
     send({
       messages: [
@@ -391,7 +402,6 @@ router.post("/reservation/delete", async (req, res, next) => {
     });
 
     reservationData.shift();
-    console.log("reservation", reservationData);
 
     //엑셀에서 해당되는 셀 찾고
     const index = reservationData.findIndex(

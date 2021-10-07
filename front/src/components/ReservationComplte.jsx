@@ -53,6 +53,17 @@ function ReservationComplte() {
               whiteSpace={"pre-wrap"}
               sx={{ marginTop: 1 }}
             >
+              {"입금 계좌: 기업은행/주재빈 123-170741-01-019"}
+            </Typography>
+
+            <Typography
+              component={"pre"}
+              variant={"body2"}
+              fontWeight={"bold"}
+              color={"black"}
+              whiteSpace={"pre-wrap"}
+              sx={{ marginTop: 1 }}
+            >
               {"2. 취소 및 환불은 방문 전일까지 가능합니다. \n(방문 전날 확인 전화를 드립니다.)"}
             </Typography>
 
