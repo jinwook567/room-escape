@@ -50,6 +50,15 @@ function DatePicker2({ startDate, setStartDate, notInline }) {
           minDate={new Date()}
           maxDate={maxDate}
           dateFormat="yyyy-MM-dd"
+          formatWeekDay={(nameOfDay) => {
+            if (nameOfDay === "토요일") {
+              return <p style={{ color: "blue" }}>{nameOfDay.substring(0, 1)}</p>;
+            }
+            if (nameOfDay === "일요일") {
+              return <p style={{ color: "red" }}>{nameOfDay.substring(0, 1)}</p>;
+            }
+            return nameOfDay.substring(0, 1);
+          }}
           dayClassName={(date) => {
             return date < new Date() || date > maxDate
               ? undefined
@@ -60,7 +69,7 @@ function DatePicker2({ startDate, setStartDate, notInline }) {
               : getDayName(createDate(date)) === "일"
               ? "sunday"
               : getIsHoliday(date)
-              ? "saturday"
+              ? "sunday"
               : undefined;
           }}
         />

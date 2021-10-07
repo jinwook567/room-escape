@@ -10,6 +10,12 @@
   width: 100%;
   /* height: 100%; */
 }
+
+.react-datepicker__day-name {
+  /* color: red; */
+  padding: 2px;
+}
+
 .react-datepicker__input-container {
   width: inherit;
   height: inherit;
@@ -54,7 +60,7 @@
   > div.react-datepicker__month
   > div.react-datepicker__week
   > div.react-datepicker__day.saturday {
-  color: rgb(255, 0, 0);
+  color: rgb(0, 0, 255);
 }
 
 .customDatePickerWidth
