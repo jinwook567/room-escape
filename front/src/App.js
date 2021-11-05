@@ -9,6 +9,7 @@ import Reservation from "./components/Reservation";
 import Main from "./components/Main";
 import { Grid } from "@material-ui/core";
 import Div100vh from "react-div-100vh";
+import { Helmet } from "react-helmet-async";
 
 // const StyledContainer2 = styled(Container)({
 //   minHeight: "90vh",
@@ -32,6 +33,11 @@ function App() {
   return (
     <>
       <Div100vh>
+        <Helmet>
+          <title>코드네임</title>
+          <link rel="부천 방탈출 카페" href="http://코드네임.com" />
+        </Helmet>
+
         <StyledContainer>
           <Header />
 

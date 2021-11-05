@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ThemeProvider } from "@material-ui/styles";
 import { createTheme } from "@material-ui/core";
+import { HelmetProvider } from "react-helmet-async";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +18,13 @@ const theme = createTheme({
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </QueryClientProvider>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

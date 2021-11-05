@@ -26,6 +26,7 @@ function ReservationInput({
   const [data, setData] = useState(initialData);
   const [isAgree, setIsAgree] = useState("no");
   const [phoneError, setPhoneError] = useState("");
+  const reservationDate = getDate(selectedDate);
 
   const onChange = (e) => {
     if (e.target.name === "phone") {
@@ -71,7 +72,7 @@ function ReservationInput({
     }
 
     if (isAgree === "no") {
-      alert("주의 사항에 동의 시 예약이 가능합니다.");
+      alert("주의 사항에 동의 시 예약이 가능합니다.");
       return;
     }
 
@@ -81,7 +82,7 @@ function ReservationInput({
     }
 
     mutation.mutate({
-      date: getDate(selectedDate),
+      date: reservationDate,
       theme: selectedTheme,
       time: selectedTime,
       name: data.name,
