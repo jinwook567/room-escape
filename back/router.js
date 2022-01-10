@@ -280,12 +280,6 @@ router.post("/reservation", async (req, res, next) => {
     // await sheetService.spreadsheets.batchUpdate({
     //   spreadsheetId: sheetId,
     // });
-    let phoneData = await sheetService.spreadsheets.values.get({
-      spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
-      range: "Sheet1",
-    });
-
-    phoneData = phoneData.data.values.map((data) => data[0]);
 
     //send kakao message
     //주문자한테, 사장님한테
@@ -300,15 +294,15 @@ router.post("/reservation", async (req, res, next) => {
 입금 부탁드립니다. 시간 내 미입금 시 자동으로 취소될 수 있습니다.
 `;
 
-    const company_message = `예약이 완료되었습니다.
-
-예약일:${req.body.date}
-테마:${req.body.theme}
-시간:${req.body.time}
-예약자:${req.body.name}
-연락처:${req.body.phone}
-인원:${req.body.count}명
-금액:${req.body.price}원`;
+    await msg.send({
+      messages: [
+        {
+          to: req.body.phone,
+          from: "0327198771",
+          text: message,
+        },
+      ],
+    });
 
     // send({
     //   messages: [
@@ -330,15 +324,23 @@ router.post("/reservation", async (req, res, next) => {
     //   }),
     // });
 
-    await msg.send({
-      messages: [
-        {
-          to: req.body.phone,
-          from: "0327198771",
-          text: message,
-        },
-      ],
+    const company_message = `예약이 완료되었습니다.
+
+예약일:${req.body.date}
+테마:${req.body.theme}
+시간:${req.body.time}
+예약자:${req.body.name}
+연락처:${req.body.phone}
+인원:${req.body.count}명
+금액:${req.body.price}원`;
+    //주석 풀어야함
+
+    let phoneData = await sheetService.spreadsheets.values.get({
+      spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
+      range: "Sheet1",
     });
+
+    phoneData = phoneData.data.values.map((data) => data[0]);
 
     await msg.send({
       messages: phoneData.map((data) => {
@@ -349,6 +351,7 @@ router.post("/reservation", async (req, res, next) => {
         };
       }),
     });
+
     // console.log("RESULT:", result);
 
     //batch update
