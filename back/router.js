@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { google } = require("googleapis");
 const path = require("path");
-const keyPath = path.resolve("./superb-infusion-326605-5090ea5e4429.json");
+const keyPath = path.resolve("./googleKey.json");
 const { config, msg } = require("solapi");
 const axios = require("axios");
 const dotenv = require("dotenv");
