@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 import React from "react";
 
-import MyButton from "./common/Button";
+import MyButton from "../common/Button";
 
 function ReservationTime({ selectedTheme, timeTableData, handleTime, selectedTime }) {
   return (

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import ReservationDo from "./ReservationDo";
 import { Box } from "@mui/system";
-import { StyledContent } from "../App";
+import { StyledContent } from "../../App";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";

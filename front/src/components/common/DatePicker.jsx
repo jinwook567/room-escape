@@ -4,7 +4,7 @@ import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import "./customDatePickerWidth.css";
 import { useQuery } from "react-query";
-import { getHolidays } from "./api";
+import { getHolidays } from "../api";
 
 const getDate = (date) => {
   const year = new Date(date).getFullYear();

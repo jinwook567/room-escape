@@ -1,9 +1,9 @@
-import { Button, Divider, Grid, Paper, Typography } from "@material-ui/core";
+import { Divider, Grid, Typography } from "@material-ui/core";
 import { Rating, Stack } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import React from "react";
 import { useHistory } from "react-router";
-import MyButton from "./common/Button";
+import MyButton from "../common/Button";
 
 function ThemeDetail({ data }) {
   const history = useHistory();

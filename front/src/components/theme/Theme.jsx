@@ -3,9 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import ThemeCard from "./ThemeCard";
 import { Box, Typography } from "@material-ui/core";
 import { useQuery } from "react-query";
-import { getTheme } from "./api";
-import Loading from "./common/Loading";
-import { StyledContent } from "../App";
+import { getTheme } from "../api";
+import Loading from "../common/Loading";
+import { StyledContent } from "../../App";
 import { use100vh } from "react-div-100vh";
 
 function Theme() {

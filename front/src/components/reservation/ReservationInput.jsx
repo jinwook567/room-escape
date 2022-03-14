@@ -3,11 +3,10 @@ import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { FormControlLabel, Grid, MenuItem, Radio, RadioGroup } from "@material-ui/core";
 import { Divider, FormControl, FormLabel, Stack, Typography } from "@mui/material";
-import MyButton from "./common/Button";
+import MyButton from "../common/Button";
 import { useMutation } from "react-query";
-import { postReservation } from "./api";
-import { getDate } from "./ReservationDo";
-import Loading from "./common/Loading";
+import { postReservation } from "../api";
+import Loading from "../common/Loading";
 
 function ReservationInput({
   setActiveStep,
@@ -26,7 +25,7 @@ function ReservationInput({
   const [data, setData] = useState(initialData);
   const [isAgree, setIsAgree] = useState("no");
   const [phoneError, setPhoneError] = useState("");
-  const reservationDate = getDate(selectedDate);
+  const reservationDate = selectedDate;
 
   const onChange = (e) => {
     if (e.target.name === "phone") {

@@ -5,7 +5,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from "./common/Modal";
+import Modal from "../common/Modal";
 import { Grid } from "@material-ui/core";
 import Rating from "@mui/material/Rating";
 import ThemeDetail from "./ThemeDetail";

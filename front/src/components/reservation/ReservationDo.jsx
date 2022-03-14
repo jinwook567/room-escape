@@ -1,24 +1,22 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
-import { Divider, Grid, styled, Typography } from "@material-ui/core";
+import React, { useRef, useState, useEffect } from "react";
+import { Grid, styled, Typography } from "@material-ui/core";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import DatePicker2 from "./DatePicker";
+import DatePicker2 from "../common/DatePicker";
 import { Box } from "@mui/system";
 import { useQuery } from "react-query";
-import { getTheme, getThemeTimeTable } from "./api";
-import Loading from "./common/Loading";
-import MyButton from "./common/Button";
+import { getThemeTimeTable } from "../api";
+import Loading from "../common/Loading";
+import MyButton from "../common/Button";
 import Stack from "@mui/material/Stack";
 import ReservationInput from "./ReservationInput";
 import ReservationTime from "./ReservationTime";
-import ReservationComplte from "./ReservationComplte";
+import ReservationComplte from "./ReservationComplete";
+import moment from "moment";
 
 export const getDate = (date) => {
-  const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth() + 1;
-  const day = new Date(date).getDate();
-  return `${year}-${month}-${day}`;
+  return moment(date).format("YY-MM-DD");
 };
 
 function ReservationDo() {

@@ -2,11 +2,11 @@ import { Grid, MenuItem, TextField, Typography } from "@material-ui/core";
 import { Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import MyButton from "./common/Button";
-import DatePicker2 from "./DatePicker";
+import MyButton from "../common/Button";
+import DatePicker2 from "../common/DatePicker";
 import { useQuery, useMutation } from "react-query";
-import { deleteReservation, getThemeTimeTable } from "./api";
-import Loading from "./common/Loading";
+import { deleteReservation, getThemeTimeTable } from "../api";
+import Loading from "../common/Loading";
 import { getDate } from "./ReservationDo";
 
 function ReservationCancel() {
