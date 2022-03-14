@@ -5,22 +5,12 @@ const keyPath = path.resolve("./superb-infusion-326605-5090ea5e4429.json");
 const { config, msg } = require("solapi");
 const axios = require("axios");
 const dotenv = require("dotenv");
+const moment = require("moment");
 
 dotenv.config();
 
-const getToday = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `${year}-${month}-${day}`;
-};
-
 const getDate = (date) => {
-  const year = new Date(date).getFullYear();
-  const month = new Date(date).getMonth() + 1;
-  const day = new Date(date).getDate();
-  return `${year}-${month}-${day}`;
+  return moment(date).format("YY-MM-DD");
 };
 
 config.init({
@@ -232,7 +222,7 @@ router.post("/reservation", async (req, res, next) => {
       });
 
       sheetId = fileResponse.data.id;
-      await sheetService.spreadsheets.values.append({
+      sheetService.spreadsheets.values.append({
         spreadsheetId: sheetId,
         range: "Sheet1!A1:G1",
         valueInputOption: "RAW",
@@ -242,7 +232,7 @@ router.post("/reservation", async (req, res, next) => {
       });
     }
 
-    await sheetService.spreadsheets.values.append({
+    sheetService.spreadsheets.values.append({
       spreadsheetId: sheetId,
       // range: "Sheet1",
       range: `Sheet1!A:G`,
@@ -252,7 +242,7 @@ router.post("/reservation", async (req, res, next) => {
       },
     });
 
-    await sheetService.spreadsheets.batchUpdate({
+    sheetService.spreadsheets.batchUpdate({
       spreadsheetId: sheetId,
       resource: {
         requests: [
@@ -277,10 +267,6 @@ router.post("/reservation", async (req, res, next) => {
       },
     });
 
-    // await sheetService.spreadsheets.batchUpdate({
-    //   spreadsheetId: sheetId,
-    // });
-
     //send kakao message
     //주문자한테, 사장님한테
     const message = `${req.body.name}님, 예약이 완료되었습니다
@@ -304,26 +290,6 @@ router.post("/reservation", async (req, res, next) => {
       ],
     });
 
-    // send({
-    //   messages: [
-    //     {
-    //       to: req.body.phone,
-    //       from: "0327198771",
-    //       text: message,
-    //     },
-    //   ],
-    // });
-
-    // send({
-    //   message: phoneData.map((data) => {
-    //     return {
-    //       to: data,
-    //       from: "0327198771",
-    //       text: company_message,
-    //     };
-    //   }),
-    // });
-
     const company_message = `예약이 완료되었습니다.
 
 예약일:${req.body.date}
@@ -335,22 +301,22 @@ router.post("/reservation", async (req, res, next) => {
 금액:${req.body.price}원`;
     //주석 풀어야함
 
-    let phoneData = await sheetService.spreadsheets.values.get({
-      spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
-      range: "Sheet1",
-    });
+    // let phoneData = await sheetService.spreadsheets.values.get({
+    //   spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
+    //   range: "Sheet1",
+    // });
 
-    phoneData = phoneData.data.values.map((data) => data[0]);
+    // phoneData = phoneData.data.values.map((data) => data[0]);
 
-    await msg.send({
-      messages: phoneData.map((data) => {
-        return {
-          to: data,
-          from: "0327198771",
-          text: company_message,
-        };
-      }),
-    });
+    // await msg.send({
+    //   messages: phoneData.map((data) => {
+    //     return {
+    //       to: data,
+    //       from: "0327198771",
+    //       text: company_message,
+    //     };
+    //   }),
+    // });
 
     // console.log("RESULT:", result);
 
