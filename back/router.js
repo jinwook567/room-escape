@@ -69,6 +69,8 @@ router.get("/reservation/:date", async (req, res, next) => {
   try {
     //만약 토요일, 일요일이면 프론트에서 예약 불가능하도록함.
     //지금으로부터 30일 뒤까지만 active 하도록 함.
+    console.log("date", req.params.date);
+    console.log("getDate", getDate(req.params.date));
 
     //theme으로부터 가능한 시간대를 전부 불러온다.
     const rowsData = await sheetService.spreadsheets.values.get({
@@ -111,6 +113,7 @@ router.get("/reservation/:date", async (req, res, next) => {
     const existReservation = getResponse.data.files.find(
       (file) => file.name === `${getDate(req.params.date)}`
     );
+    console.log({ existReservation });
 
     if (!existReservation) {
       return res.json(themeData);
@@ -151,6 +154,8 @@ router.get("/reservation/:date", async (req, res, next) => {
     });
 
     reservationData.shift();
+
+    console.log({ reservationData });
 
     reservationData.forEach((data) => {
       themeData = themeData.map((theme) => {
@@ -205,6 +210,8 @@ router.post("/reservation", async (req, res, next) => {
         file.mimeType === "application/vnd.google-apps.spreadsheet"
     );
 
+    console.log({ isExistFile });
+
     let sheetId;
 
     if (isExistFile) {
@@ -222,7 +229,7 @@ router.post("/reservation", async (req, res, next) => {
       });
 
       sheetId = fileResponse.data.id;
-      sheetService.spreadsheets.values.append({
+      await sheetService.spreadsheets.values.append({
         spreadsheetId: sheetId,
         range: "Sheet1!A1:G1",
         valueInputOption: "RAW",
@@ -232,7 +239,7 @@ router.post("/reservation", async (req, res, next) => {
       });
     }
 
-    sheetService.spreadsheets.values.append({
+    await sheetService.spreadsheets.values.append({
       spreadsheetId: sheetId,
       // range: "Sheet1",
       range: `Sheet1!A:G`,
@@ -242,7 +249,7 @@ router.post("/reservation", async (req, res, next) => {
       },
     });
 
-    sheetService.spreadsheets.batchUpdate({
+    await sheetService.spreadsheets.batchUpdate({
       spreadsheetId: sheetId,
       resource: {
         requests: [
@@ -299,28 +306,23 @@ router.post("/reservation", async (req, res, next) => {
 연락처:${req.body.phone}
 인원:${req.body.count}명
 금액:${req.body.price}원`;
-    //주석 풀어야함
 
-    // let phoneData = await sheetService.spreadsheets.values.get({
-    //   spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
-    //   range: "Sheet1",
-    // });
+    let phoneData = await sheetService.spreadsheets.values.get({
+      spreadsheetId: "167l2cnDvrSD2jyrrJ2v7951pR_MyVYaQX_C2xT27CfY",
+      range: "Sheet1",
+    });
 
-    // phoneData = phoneData.data.values.map((data) => data[0]);
+    phoneData = phoneData.data.values.map((data) => data[0]);
 
-    // await msg.send({
-    //   messages: phoneData.map((data) => {
-    //     return {
-    //       to: data,
-    //       from: "0327198771",
-    //       text: company_message,
-    //     };
-    //   }),
-    // });
-
-    // console.log("RESULT:", result);
-
-    //batch update
+    await msg.send({
+      messages: phoneData.map((data) => {
+        return {
+          to: data,
+          from: "0327198771",
+          text: company_message,
+        };
+      }),
+    });
 
     res.send("complete");
   } catch (err) {
