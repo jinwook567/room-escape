@@ -42,7 +42,7 @@ function App() {
         </Helmet>
 
         <StyledContainer>
-          <Modal open={isOpen} setOpen={setIsOpen}>
+          {/* <Modal open={isOpen} setOpen={setIsOpen}>
             <div>
               불편을 드려 죄송합니다. 현재 홈페이지 리뉴얼 중으로 홈페이지 예약이 불가합니다. 아래
               링크(네이버 플레이스)로 예약 부탁드립니다. 감사합니다.
@@ -56,7 +56,7 @@ function App() {
                 네이버 예약 바로가기
               </a>
             </div>
-          </Modal>
+          </Modal> */}
           <Header />
 
           <Switch>
